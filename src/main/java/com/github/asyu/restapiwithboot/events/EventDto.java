@@ -2,19 +2,15 @@ package com.github.asyu.restapiwithboot.events;
 
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter @Setter
-@Builder @NoArgsConstructor
+@Builder
+@Getter
+@Setter
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Entity
-public class Event {
+@NoArgsConstructor
+public class EventDto {
 
-    @Id
-    @GeneratedValue
-    private Integer id;
     private String name;
     private String description;
     private LocalDateTime beginEnrollmentDateTime;
@@ -25,9 +21,4 @@ public class Event {
     private int basePrice; // (optional)
     private int maxPrice; // (optional)
     private int limitOfEnrollment;
-    private boolean offline;
-    private boolean free;
-
-    @Enumerated(EnumType.STRING)
-    private EventStatus eventStatus = EventStatus.DRAFT;
 }
