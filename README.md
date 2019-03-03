@@ -164,4 +164,34 @@ MockMvc
     - 요청 문서화 
     - 응답 문서화 
     - 링크 문서화 
-    - profile 링크 추가 
+    - profile 링크 추가
+    
+---
+# Event 생성 API 구현 : 201 응답 받기
+ReponseEntity을 사용하는 이유
+- 응답 코드, 헤더, 본문 모두 다루기 편한 API
+
+Location URI 만들기
+- HATEOS가 제공하는 linkTo(), methodTo() 사용
+
+객체를 JSON으로 변환
+- ObjectMapper 사용
+
+# Event 생성 API 구현 : EventRepository 구현
+
+스프링 데이터 JPA
+- JPARepository 상속받아 사용
+
+Enum읗 JPA 맴핑시 주의 할 것
+- @Enumerated (EnumType.STRING)
+
+@MockBean
+- Mockito를 사용해서 mock 객체를 만들고 빈으로 등록해줌
+- (주의) 기존 빈을 테스트용 빈이 대체함.
+
+테스트 할 것
+```
+입력값들을 전달하면 JSON 응답으로 201이 나오는지 확인
+- Location 헤더에 생성된 이벤트를 조회할 수 있는 URI가 담겨 있는지 확인
+- id는 DB에 들어갈 때 자동생성된 값으로 나오는지 확인
+```
