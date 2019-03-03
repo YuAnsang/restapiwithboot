@@ -113,3 +113,9 @@ PUT /api/evnets/{id}
 
 --- 
 
+Lombok Annotation 추가
+- @EqualsAndHashCode에서 of를 사용하는 이유 
+    - (원하는 필드값만 비교)
+- @Data를 쓰지 않는 이유 
+    - (상호 참조에서 위험)
+- Lombok Annotation은 줄여쓸 수 없다.
