@@ -197,7 +197,7 @@ Enum읗 JPA 맴핑시 주의 할 것
 - id는 DB에 들어갈 때 자동생성된 값으로 나오는지 확인
 ```
 ---
-# Event 생성 API 구현 : 입력값 제한하
+# Event 생성 API 구현 : 입력값 제한하기
 
 입력값 제한
 - id 또는 입력받은 데이터로 계산해야 하는 값들은 입력받지 않아야 함.
@@ -213,4 +213,10 @@ compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.2'
     - BadRequest로 응답 vs 받기로 한 값 이외는 무시
 - Web쪽 관련된 테스트는 @SpringbootTest를 사용하는 것이 더 편함. 
     - 슬라이싱하면 mocking 할 것이 너무 많음
-    - 관리도 힘듦
+    - 관리도 힘듦 
+---
+# Event 생성 API 구현 : 입력값 이외에 에러 발생
+
+ObjectMapper 커스터마이징
+- spring.jackson.deserialization.fail-on-unknown-properties=true
+- Bad_Request 발생
