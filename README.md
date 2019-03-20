@@ -220,3 +220,6 @@ compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.2'
 ObjectMapper 커스터마이징
 - spring.jackson.deserialization.fail-on-unknown-properties=true
 - Bad_Request 발생
+
+---
+
