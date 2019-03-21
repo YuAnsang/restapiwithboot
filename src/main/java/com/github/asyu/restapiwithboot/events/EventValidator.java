@@ -13,7 +13,7 @@ public class EventValidator {
             //errors.rejectValue("basePrice", "wrongValue", "basePrice is wrong.");
             //errors.rejectValue("maxPrice", "wrongValue", "maxPrice is wrong.");
             // reject : global error
-            errors.reject("wrongPrices", "Values of Prices are wrong."); 
+            errors.reject("wrongPrices", "Values fo Prices are wrong."); 
         }
         
         LocalDateTime endEventDateTime = eventDto.getEndEventDateTime();
