@@ -223,3 +223,11 @@ ObjectMapper 커스터마이징
 
 ---
 
+# Event 생성 API 구현 : Bad Request 처리하기
+
+@Valid와 BindingResult (또는 Errors)
+    - BindingResult는 항상 @Valid 바로 다음 인자로 사용해야함. (스프링 MVC)
+    - @NotNUll, @NotEmpty, @Min, @Max ... 사용해서 입력 값 바인딩 시 에러 확인
+
+도메인 Validator 만들기
+
