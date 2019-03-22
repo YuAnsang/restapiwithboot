@@ -292,3 +292,79 @@ EventResource 만들기
 - events (목록 링크)
 ```
 
+# 스프링 REST Docs 소개
+
+[https://docs.spring.io/spring-restdocs/docs/2.0.2.RELEASE/reference/html5/](https://docs.spring.io/spring-restdocs/docs/2.0.2.RELEASE/reference/html5/)
+
+snippet(문서 조각)을 사용하여 HTML 코드등으로 변환해준다.
+
+REST Docs 자동 실행
+- @AutoConfigureRestDoc (Test 위에)
+
+REST Docs 코딩
+- andDo(document("문서명"), snippets))
+- snippets
+    - links()
+    - requestParameters() + parameterWithName() 
+    - pathParameters() + parametersWithName() 
+    - requestParts() + partWithname() 
+    - requestPartBody() 
+    - requestPartFields() 
+    - requestHeaders() + headerWithName() 
+    - requestFields() + fieldWithPath() 
+    - responseHeaders() + headerWithName() 
+    - responseFields() + fieldWithPath() 
+- Relaxed
+- Processor
+    - preprocessRequest(prettyPrint()) 
+    - preprocessResponse(prettyPrint()) 
+Constraint 
+
+---
+
+# 스프링 REST Docs 적용
+
+REST Docs 자동실행
+- @AutoConfigureRestDocs
+
+RestDocMockMvc 커스터마이징
+- RestDocsMockMvcCongifurationCustomizer 구현한 빈 등록
+- @TestConfiguration
+
+테스트 할 것
+```
+API 문서 만들기
+- 요청 본문 문서화  (o)
+- 응답 본문 문서화  (o)
+- 링크 문서화
+    - Profile 링크 추가
+- 응답 헤더 문서화
+```
+
+---
+
+# 스프링 REST Docs - 링크, (Req, Res) 필드와 헤더 문서화
+
+요청 필드 문서화
+- requestFields() + fieldWithPath()
+- responseFields() + fieldWithPath()
+- requestHeaders() + headerWithName() 
+- responseHeaders() + headerWithName()
+- links() + linkWithRel()
+
+테스트 할 것
+```
+API 문서 만들기
+- 요청 본문 문서화  (o)
+- 응답 본문 문서화  (o)
+- 링크 문서화
+    - self
+    - query-events
+    - update-event
+    - Profile 링크 추가
+- 응답 헤더 문서화
+- 요청 헤더 문서화
+- 요청 필드 문서화
+- 응답 헤더 문서화
+- 응답 필드 문서화
+```
