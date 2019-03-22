@@ -256,4 +256,39 @@ BindingError
 - rejectedValue
 ---
 
+# 스프링 HATEOAS 소개
+
+스프링 HATEOAS
+- 주소 : [HATEOAS](https://docs.spring.io/spring-hateoas/docs/current/reference/html/)
+- 링크 만드는 기능
+    - 문자열 가지고 만들기
+    - 컨트롤러와 메서드로 만들기 
+- 리소스 만드는 기능
+    - 리소스 : 데이터 + 기능
+- 링크 찾아주는 기능
+    - Traverson
+    - LinkDiscoverers
+- 링크 (2가지 정보)
+    - HREF 
+    - REL (Relation - 현재  리소스와의 관계)
+        - self (자기 자신)
+        - profile (응답 본문에 대한 문서)
+        - update-event (이벤트 수정)
+        - query-events (이벤트 조회)
+---
+
+# 스프링 HATEOAS 적용
+
+EventResource 만들기
+    - extends ResourceSupport의 문제 (composition 필드들은 serialize 시 필드명을 따라가게 되어있음)
+        - @JsonUnwrapped로 해결
+        - extends Resource<T>로 해결
+    
+테스트 할 것
+```
+응답에 HATEOAS와 profile 관련 링크가 있는지 확인
+- self (view)
+- update (수정 기능)
+- events (목록 링크)
+```
 
