@@ -5,6 +5,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'io.spring.dependency-management'
 
 group = 'com.github.asyu'
 version = '0.0.1-SNAPSHOT'
@@ -22,20 +23,26 @@ dependencies {
     compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.2'
 
     compile 'org.projectlombok:lombok'
+    
     runtimeOnly 'org.postgresql:postgresql'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testCompile 'com.h2database:h2'
+    
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.2.RELEASE'
 }
 
-/*
-test {
+apply plugin: "org.asciidoctor.convert"
+ext { 
+    snippetsDir = file('build/generated-snippets')
+}
+
+test { 
     outputs.dir snippetsDir
 }
 
-asciidoctor {
-    inputs.dir snippetsDir
-    dependsOn test
+asciidoctor { 
+    inputs.dir snippetsDir 
+    dependsOn test 
 }
-*/
