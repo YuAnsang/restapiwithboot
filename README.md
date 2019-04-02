@@ -376,4 +376,51 @@ Relaxed 접두어
 
 # 스프링 REST Docs: 문서 빌드
 
+---
 
+# PostgreSQL 적용
+
+테스트 할 때는 계속 H2를 사용해도 조ㅗㅎ지만 어플리케이션 서버를 실행 할 때는 PostgreSQL을 사용하도록 변경(Docker 사용)
+
+1. PostgreSQL 드라이버 의존성 추가
+2. 도커로 PostgreSQL 컨테이너 실행
+```
+docker run --name ndb -p 5432:5432 -e POSTGRES_PASSWORD=pass -d postgres
+```
+3. 도커 컨테이너에 들어가보기
+```
+docker exec -it ndb bash
+su - postgres
+psql -d postgres -U postgres
+\l
+\dt
+```
+4. 데이터소스 설정
+```
+spring.datasource.username=postgres
+spring.datasource.password=pass
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+spring.datasource.driver-class-name=org.postgres.Driver
+```
+5. 하이버네이트 설정
+```
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+spring.jpa.properties.hibernate.format_sql=true
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+```
+
+애플리케이션 설정과 테스트 설정 중복을 어떻게 줄일 것인가?
+- 프로파일과 @ActiveProfiles 활용
+
+application-test.properties
+```
+application-test.properties
+spring.datasource.username=sa
+spring.datasource.password=
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.hikari.jdbc-url=jdbc:h2:mem:testdb
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+```
