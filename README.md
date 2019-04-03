@@ -474,4 +474,94 @@ Page<Event>안에 들어있는 Event들은 리소스로 어떻게 변경?
     ● 링크
     ● 수정한 이벤트 데이터
 ```
+---
 
+# Account 도메인 추가
+
+OAuth2로 인증하려면 일단 Account부터
+- id
+- email
+- password
+- roles
+
+AccountRoles
+- ADMIN, USER
+
+JPA 맵핑
+- @Table
+
+JPA enumeration collection mapping
+```
+@ElementCollection(fetch = FetchType.EAGER)
+@Enumerated(EnumType.STRING) private
+Set<AccountRole> roles;
+```
+
+Event에 onwer 추가
+```
+@ManyToOne
+Account manager;
+```
+---
+
+# 스프링 시큐리티 적용
+
+스프링 시큐리티
+- 웹 시큐리티 (Filter 기반 시큐리티)
+- 메서드 시큐리티
+- 이 둘 다 Security Interceptor를 사용합니다
+    - 리소스에 접근을 허용할 것이냐 말것이냐를 결정하는 로직
+    
+의존성 추가
+```
+implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.3.RELEASE'
+```
+- 테스트 다 깨짐 (401 Unauthorized)
+
+UserDetailesService 구현
+- 예외 테스트하기
+    - @Test(expected)
+    - @Rule ExpectedException
+    - try-catch
+- assertThat    
+---
+
+# 스프링 시큐리티 기본 설정
+
+시큐리티 필터를 적용하지 않음
+- /docs/index.html
+
+로그인 없이 가능
+- GET /api/events
+- GET /api/events/{id}
+
+로그인 해야 접근 가능
+- POST /api/events
+- PUT /api/events
+- 나머지 전부
+
+스프링 시큐리티 Oauth 2.0
+- AuthorizationServer: OAuth2 토큰 발행(/oauth/token) 및 토큰 인증(/oauth/authorize)
+    - Oder 0 (리소스 서버 보다 우선 순위가 높다.)
+- ResourceServer: 리소스 요청 인증 처리 (OAuth 2 토큰 검사)
+    - Oder 3 (이 값은 현재 고칠 수 없음)
+    
+스프링 시큐리티 설정
+- @EnableWebSecurity
+- @EnableGlobalMethodSecurity
+- extends WebSecurityConfigurerAdapter
+- PasswordEncoder: PasswordEncoderFactories.createDelegatingPassworkEncoder()
+- TokenStore: InMemoryTokenStore
+- AuthenticationManagerBean
+- configure(AuthenticationManagerBuidler auth)
+    - userDetailsService
+    - passwordEncoder
+
+- configure(HttpSecurity http)
+    - /docs/**: permitAll
+- configure(WebSecurty web)
+    - ignore ■ /docs/**
+    
+- /favicon.ico
+
+- PathRequest.toStaticResources() 사용하기
