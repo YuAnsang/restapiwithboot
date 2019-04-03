@@ -424,3 +424,54 @@ spring.datasource.driver-class-name=org.h2.Driver
 spring.datasource.hikari.jdbc-url=jdbc:h2:mem:testdb
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
 ```
+---
+# API 인덱스 만들기
+
+인덱스 만들기
+- 다른 리소스에 대한 링크 제공
+- 문서화
+
+```
+@GetMapping("/api")
+public ResourceSupport root() {
+    ResourceSupport index = new ResourceSupport();
+    index.add(linkTo(EventController.class).withRel("events"));
+    return index; 
+}
+```
+
+테스트 컨트롤러 리펙토링
+
+에러 리소스
+- 인덱스로 가는 링크 제공
+---
+
+# 이벤트 목록 조회 API 구현
+
+페이징, 정렬은???
+- 스프링 데이터 JPA가 제공하는 Pageable
+
+Page<Event>안에 들어있는 Event들은 리소스로 어떻게 변경?
+- 하나씩 순회하면서 직접 EventResource로 매핑
+- PagedResourceAssembler<T> 사용
+
+테스트 할 때 Pageable 파라미터 제공하는 방법
+- page : 0부터 시작
+- size : 기본값 20
+- sort : property,property(ASC|DESC)
+---
+
+# 이벤트 수정 API
+
+테스트 할 것
+```
+수정하려는 이벤트가 없는 경우 404 NOT_FOUND 입력 데이터
+(데이터 바인딩)가 이상한 경우에 400 BAD_REQUEST 도메인
+로직으로 데이터 검증 실패하면 400 BAD_REQUEST 
+(권한이 충분하지 않은 경우에 403 FORBIDDEN) 정상적으로 수정한 경우에
+이벤트 리소스 응답
+    ● 200 OK
+    ● 링크
+    ● 수정한 이벤트 데이터
+```
+
