@@ -65,7 +65,7 @@ public class AccountServiceTest {
     }
     
     @Test
-    public void findByUsernameFail2() {
+    public void findByUsernameFail_useExpectedException() {
         // Expected
         String username = "random@gmail.com";
         expectedException.expect(UsernameNotFoundException.class);
