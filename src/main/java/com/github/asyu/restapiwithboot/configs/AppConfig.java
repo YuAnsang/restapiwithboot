@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.github.asyu.restapiwithboot.accounts.Account;
 import com.github.asyu.restapiwithboot.accounts.AccountRole;
 import com.github.asyu.restapiwithboot.accounts.AccountService;
+import com.github.asyu.restapiwithboot.common.AppProperties;
 
 @Configuration
 public class AppConfig {
@@ -26,22 +27,31 @@ public class AppConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
     
-    /*
     @Bean
     public ApplicationRunner applicationRunner() {
         return new ApplicationRunner() {
-            
             @Autowired
             AccountService accountService;
             
+            @Autowired
+            AppProperties appProperties;
+            
             @Override
             public void run(ApplicationArguments args) throws Exception {
-                Account account = Account.builder().email("asyu@gmail.com").password("ml4151")
+                Account admin = Account.builder()
+                                .email(appProperties.getAdminUsername())
+                                .password(appProperties.getAdminPassword())
                                 .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
                                 .build();
-                accountService.saveAccount(account);
+                accountService.saveAccount(admin);
+                
+                Account user = Account.builder()
+                        .email(appProperties.getUserUsername())
+                        .password(appProperties.getUserPassword())
+                        .roles(Set.of(AccountRole.USER))
+                        .build();
+                accountService.saveAccount(user);
             }
         };
     }
-    */
 }

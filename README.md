@@ -570,3 +570,6 @@ UserDetailesService 구현
 
 # 스프링 시큐리티 OAuth2 설정 : 인증 서버 설정
 
+---
+
+# 스프링 시큐리티 OAuth2 설정 : 리소스 서버 설정

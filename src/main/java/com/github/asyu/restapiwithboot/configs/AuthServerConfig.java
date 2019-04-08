@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import com.github.asyu.restapiwithboot.accounts.AccountService;
+import com.github.asyu.restapiwithboot.common.AppProperties;
 
 @Configuration
 @EnableAuthorizationServer
@@ -28,6 +29,9 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     TokenStore tokenStore;
     
+    @Autowired
+    AppProperties appProperties;
+    
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.passwordEncoder(passwordEncoder);
@@ -35,10 +39,10 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory().withClient("myApp")
+        clients.inMemory().withClient(appProperties.getClientId())
                 .authorizedGrantTypes("password", "refresh_token")
                 .scopes("read", "write")
-                .secret(this.passwordEncoder.encode("pass"))
+                .secret(this.passwordEncoder.encode(appProperties.getClientSecret()))
                 .accessTokenValiditySeconds(10 * 60)
                 .refreshTokenValiditySeconds(6 * 10 * 60)
                 ;
