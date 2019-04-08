@@ -3,7 +3,9 @@ package com.github.asyu.restapiwithboot.events;
 import lombok.*;
 
 import javax.persistence.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.asyu.restapiwithboot.accounts.Account;
+import com.github.asyu.restapiwithboot.accounts.AccountSerializer;
 import java.time.LocalDateTime;
 
 @Getter @Setter
@@ -31,6 +33,7 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus = EventStatus.DRAFT;
     @ManyToOne
+    @JsonSerialize(using = AccountSerializer.class)
     private Account manager;
     
     public void update() {
