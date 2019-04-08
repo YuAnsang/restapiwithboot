@@ -565,3 +565,8 @@ UserDetailesService 구현
 - /favicon.ico
 
 - PathRequest.toStaticResources() 사용하기
+
+---
+
+# 스프링 시큐리티 OAuth2 설정 : 인증 서버 설정
+
